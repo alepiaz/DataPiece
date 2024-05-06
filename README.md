@@ -12,22 +12,24 @@ Data Piece is a console-based application designed to streamline the process of 
 ## Installation
 
 1. Clone the repository:
-    ```
+    ```bash
     git clone https://github.com/alepiaz/datapiece.git
     ```
 2. Navigate to the project directory:
-    ```
+    ```bash
     cd datapiece
     ```
 3. Install the required dependencies:
-    ```
+    ```bash
     pip install -r requirements.txt
     ```
 
 ## Usage
 
 To start the console, run the following command:
-`python main.py --config config/config.json`
+```bash
+python main.py --config config/config.json
+```
 
 ## Database structure
 ![ERM](src/erd.png?raw=True)
