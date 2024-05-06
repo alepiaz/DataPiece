@@ -1,7 +1,8 @@
 import argparse
+
 from scripts.console import Console
 from scripts.db_query_handler import DBQueryHandler
-from scripts.utils.json import load_config, get_key_dict
+from scripts.utils.config import get_key_dict, load_config
 
 
 def main():
