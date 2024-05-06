@@ -2,14 +2,15 @@
 This module defines the DBQueryHandler class for handling database queries.
 """
 
-import sqlite3
 import os
-from scripts.utils.json import get_key_str
+import sqlite3
+
 from scripts.utils.files import (
     can_read_existing_file,
     can_write_to_dir_of_existing_file,
     does_path_exist,
 )
+from scripts.utils.config import get_key_str
 
 
 class DBQueryHandler:
@@ -24,7 +25,7 @@ class DBQueryHandler:
         cursor (sqlite3.Cursor): SQLite database cursor.
     """
 
-    def __init__(self, config: dict, delete_db: bool = False):
+    def __init__(self, config: dict, delete_db: bool = False) -> None:
         """
         Initializes the DBQueryHandler with the given configuration and deletion flag.
 
@@ -40,7 +41,7 @@ class DBQueryHandler:
         self._connect_to_database()
         self._create_database_if_needed()
 
-    def _handle_database_deletion(self):
+    def _handle_database_deletion(self) -> None:
         """
         Deletes the existing database file if needed and if the file is readable.
         """
@@ -56,7 +57,7 @@ class DBQueryHandler:
         """
         return self.delete_db or self.test_mode
 
-    def _connect_to_database(self):
+    def _connect_to_database(self) -> None:
         """
         Connects to the SQLite database.
         """
@@ -66,7 +67,7 @@ class DBQueryHandler:
             self.conn = sqlite3.connect(self.db_path)
             self.cursor = self.conn.cursor()
 
-    def _create_database_if_needed(self):
+    def _create_database_if_needed(self) -> None:
         """
         Creates the database schema if necessary.
 
@@ -76,7 +77,7 @@ class DBQueryHandler:
         if not self._check_tables():
             self._create_database(self.schema_file)
 
-    def _create_database(self, schema_file: str):
+    def _create_database(self, schema_file: str) -> None:
         """
         Creates the database schema if necessary.
 
@@ -86,7 +87,7 @@ class DBQueryHandler:
         """
         self._initialize_database_from_schema(schema_file)
 
-    def _check_tables(self):
+    def _check_tables(self) -> None:
         """
         Checks if the necessary tables exist in the database.
 
@@ -97,7 +98,7 @@ class DBQueryHandler:
         tables = self.cursor.fetchall()
         return len(tables) > 0
 
-    def _initialize_database_from_schema(self, schema_file: str):
+    def _initialize_database_from_schema(self, schema_file: str) -> None:
         """
         Initializes the database from the schema file.
 
@@ -124,7 +125,7 @@ class DBQueryHandler:
             print(f"Schema file {schema_file} does not exist.")
             return []
 
-    def _execute_sql_commands_list(self, sql_commands: list):
+    def _execute_sql_commands_list(self, sql_commands: list) -> None:
         """
         Executes the given list of SQL commands.
 
@@ -134,7 +135,7 @@ class DBQueryHandler:
         for command in sql_commands:
             self._execute_sql_command(command)
 
-    def _execute_sql_command(self, command: str):
+    def _execute_sql_command(self, command: str) -> None:
         """
         Executes the given SQL command.
 
@@ -146,7 +147,7 @@ class DBQueryHandler:
         except sqlite3.OperationalError as e:
             print(f"Command skipped: {e}")
 
-    def execute_query(self, query: str):
+    def execute_query(self, query: str) -> None:
         """
         Executes the given SQL query and commits the changes.
 
