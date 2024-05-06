@@ -6,9 +6,9 @@ import os
 import sqlite3
 
 from scripts.utils.files import (
-    can_read_existing_file,
-    can_write_to_dir_of_existing_file,
-    does_path_exist,
+    is_readable_existing_file,
+    is_writeable_file_directory,
+    is_path_existent,
 )
 from scripts.utils.config import get_key_str
 
@@ -39,16 +39,16 @@ class DBQueryHandler:
         self.delete_db = delete_db
         self._handle_database_deletion()
         self._connect_to_database()
-        self._create_database_if_needed()
+        self._create_database_if_not_exist()
 
     def _handle_database_deletion(self) -> None:
         """
         Deletes the existing database file if needed and if the file is readable.
         """
-        if self._need_to_delete() and can_read_existing_file(self.db_path):
+        if self._is_need_to_delete() and is_readable_existing_file(self.db_path):
             os.remove(self.db_path)
 
-    def _need_to_delete(self) -> bool:
+    def _is_need_to_delete(self) -> bool:
         """
         Checks if the database should be deleted due to delete_db or test_mode being True.
 
@@ -61,13 +61,13 @@ class DBQueryHandler:
         """
         Connects to the SQLite database.
         """
-        if can_write_to_dir_of_existing_file(self.db_path) or not does_path_exist(
+        if is_writeable_file_directory(self.db_path) or not is_path_existent(
             self.db_path
         ):
             self.conn = sqlite3.connect(self.db_path)
             self.cursor = self.conn.cursor()
 
-    def _create_database_if_needed(self) -> None:
+    def _create_database_if_not_exist(self) -> None:
         """
         Creates the database schema if necessary.
 
@@ -108,7 +108,7 @@ class DBQueryHandler:
         sql_commands = self._load_commands_from_schema(schema_file)
         self._execute_sql_commands_list(sql_commands)
 
-    def _load_commands_from_schema(self, schema_file: str) -> list:
+    def _load_commands_from_schema(self, schema_file: str) -> list[str]:
         """
         Loads the SQL commands from the schema file.
 
@@ -116,7 +116,7 @@ class DBQueryHandler:
             schema_file (str): Path to the schema file.
 
         Returns:
-            list: List of SQL commands.
+            list[str]: List of SQL commands.
         """
         try:
             with open(schema_file, "r") as f:
@@ -125,7 +125,7 @@ class DBQueryHandler:
             print(f"Schema file {schema_file} does not exist.")
             return []
 
-    def _execute_sql_commands_list(self, sql_commands: list) -> None:
+    def _execute_sql_commands_list(self, sql_commands: list[str]) -> None:
         """
         Executes the given list of SQL commands.
 
