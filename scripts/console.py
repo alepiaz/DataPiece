@@ -6,6 +6,7 @@ from pyreadline3 import Readline
 from scripts.db_query_handler import DBQueryHandler
 from scripts.commands import Commands
 from scripts.utils.json import get_key_dict
+from typing import Optional
 
 
 class Console:
@@ -47,15 +48,12 @@ class Console:
                 command = readline.readline(">>> ")
                 if command.lower().strip() == "exit":
                     break
+                command_parts = command.split()
+                command_name = command_parts[0]
+                if command_name in self.commands:
+                    getattr(self.commands_instance, command_name)(*command_parts[1:])
                 else:
-                    command_parts = command.split()
-                    command_name = command_parts[0]
-                    if command_name in self.commands:
-                        getattr(self.commands_instance, command_name)(
-                            *command_parts[1:]
-                        )
-                    else:
-                        print(f"Unknown command: {command_name}")
+                    print(f"Unknown command: {command_name}")
             except KeyboardInterrupt:
                 # Handle Ctrl+C
                 continue
@@ -65,7 +63,7 @@ class Console:
 
         self.handler.conn.close()
 
-    def completer(self, text: str, state: int):
+    def completer(self, text: str, state: int) -> Optional[str]:
         """
         Provides command completion options.
 
@@ -80,5 +78,4 @@ class Console:
         options = [i for i in self.commands if i.startswith(text)]
         if state < len(options):
             return options[state]
-        else:
-            return None
+        return
