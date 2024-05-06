@@ -36,28 +36,27 @@ class DBQueryHandler:
         self.db_path = get_key_str(config, "db")
         self.test_mode = get_key_str(config, "mode") == "test"
         self.delete_db = delete_db
-        self.handle_database_deletion()
-        self.connect_to_database()
-        self.create_database_if_needed()
+        self._handle_database_deletion()
+        self._connect_to_database()
+        self._create_database_if_needed()
 
-    def handle_database_deletion(self):
+    def _handle_database_deletion(self):
         """
         Deletes the existing database file if needed and if the file is readable.
         """
-        if self.need_to_delete() and file_exists_and_is_readable(self.db_path):
+        if self._need_to_delete() and file_exists_and_is_readable(self.db_path):
             os.remove(self.db_path)
 
-    def need_to_delete(self):
+    def _need_to_delete(self) -> bool:
         """
         Checks if the database should be deleted due to delete_db or test_mode being True.
 
         Returns:
             bool: True if deletion is needed, False otherwise.
         """
-
         return self.delete_db or self.test_mode
 
-    def connect_to_database(self):
+    def _connect_to_database(self):
         """
         Connects to the SQLite database.
         """
@@ -67,23 +66,26 @@ class DBQueryHandler:
             self.conn = sqlite3.connect(self.db_path)
             self.cursor = self.conn.cursor()
 
-    def create_database_if_needed(self):
+    def _create_database_if_needed(self):
         """
         Creates the database schema if necessary.
 
         If the necessary tables do not exist in the database,
             it creates the database schema from the schema file.
         """
-        if not self.check_tables():
-            self.create_database(self.schema_file)
+        if not self._check_tables():
+            self._create_database(self.schema_file)
 
-    def create_database(self, schema_file: str):
+    def _create_database(self, schema_file: str):
         """
         Creates the database schema if necessary.
-        """
-        self.initialize_database_from_schema(schema_file)
 
-    def check_tables(self):
+        Args:
+            schema_file (str): The path to the schema file containing the database schema definition.
+        """
+        self._initialize_database_from_schema(schema_file)
+
+    def _check_tables(self):
         """
         Checks if the necessary tables exist in the database.
 
@@ -94,17 +96,17 @@ class DBQueryHandler:
         tables = self.cursor.fetchall()
         return len(tables) > 0
 
-    def initialize_database_from_schema(self, schema_file: str):
+    def _initialize_database_from_schema(self, schema_file: str):
         """
         Initializes the database from the schema file.
 
         Parameters:
             schema_file (str): Path to the schema file.
         """
-        sql_commands = self.load_commands_from_schema(schema_file)
-        self.execute_sql_commands_list(sql_commands)
+        sql_commands = self._load_commands_from_schema(schema_file)
+        self._execute_sql_commands_list(sql_commands)
 
-    def load_commands_from_schema(self, schema_file: str) -> list:
+    def _load_commands_from_schema(self, schema_file: str) -> list:
         """
         Loads the SQL commands from the schema file.
 
@@ -114,7 +116,6 @@ class DBQueryHandler:
         Returns:
             list: List of SQL commands.
         """
-
         try:
             with open(schema_file, "r") as f:
                 return f.read().split(";")
@@ -122,7 +123,7 @@ class DBQueryHandler:
             print(f"Schema file {schema_file} does not exist.")
             return []
 
-    def execute_sql_commands_list(self, sql_commands: list):
+    def _execute_sql_commands_list(self, sql_commands: list):
         """
         Executes the given list of SQL commands.
 
@@ -130,9 +131,9 @@ class DBQueryHandler:
             sql_commands (list): List of SQL commands.
         """
         for command in sql_commands:
-            self.execute_sql_command(command)
+            self._execute_sql_command(command)
 
-    def execute_sql_command(self, command: str):
+    def _execute_sql_command(self, command: str):
         """
         Executes the given SQL command.
 
