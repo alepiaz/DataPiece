@@ -3,10 +3,10 @@ A module for handling JSON configuration files and checking file existence.
 """
 
 import json
-import os
+from typing import Any
 
 
-def load_config(config_path: str) -> dict:
+def load_config(config_path: str) -> dict[str, Any]:
     """
     Loads a JSON config file.
 
@@ -25,21 +25,21 @@ def load_config(config_path: str) -> dict:
     return config
 
 
-def get_key_dict(d: dict, key: str) -> dict:
+def get_key_dict(d: dict[str, Any], key: str) -> dict[str, Any]:
     """
     Returns the value of a key from a dictionary as a dict.
     """
     return d.get(key, {})
 
 
-def get_key_str(d: dict, key: str) -> str:
+def get_key_str(d: dict[str, Any], key: str) -> str:
     """
     Returns the value of a key from a dictionary as a str.
     """
     return d.get(key, "")
 
 
-def get_key_list(d: dict, key: str) -> list:
+def get_key_list(d: dict[str, Any], key: str) -> list[str]:
     """
     Returns the value of a key from a dictionary as a list.
     """
