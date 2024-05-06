@@ -32,8 +32,8 @@ CREATE TABLE Pages (
     FOREIGN KEY (ChapterID) REFERENCES Chapters(ChapterID)
 );
 
-CREATE TABLE Cartoons (
-    CartoonID INT PRIMARY KEY,
+CREATE TABLE Panels (
+    PanelID INT PRIMARY KEY,
     PageID INT,
     IsFlashback BOOLEAN DEFAULT FALSE,
     Location VARCHAR(255) DEFAULT 'Unknown',
@@ -54,10 +54,10 @@ CREATE TABLE Affiliations (
 CREATE TABLE CharacterAppearances (
     AppearanceID INT PRIMARY KEY,
     CharacterID INT,
-    CartoonID INT,
+    PanelID INT,
     Bounty BIGINT,
     FOREIGN KEY (CharacterID) REFERENCES Characters(CharacterID),
-    FOREIGN KEY (CartoonID) REFERENCES Cartoons(CartoonID)
+    FOREIGN KEY (PanelID) REFERENCES Panels(PanelID)
 );
 
 CREATE TABLE CharacterAffiliations (
@@ -96,12 +96,12 @@ CREATE TABLE CharacterInteractions (
     InteractionID INT PRIMARY KEY,
     Character1ID INT,
     Character2ID INT,
-    CartoonID INT,
+    PanelID INT,
     IsFighting BOOLEAN DEFAULT FALSE,
     IsTalking BOOLEAN DEFAULT FALSE,
     FOREIGN KEY (Character1ID) REFERENCES Characters(CharacterID),
     FOREIGN KEY (Character2ID) REFERENCES Characters(CharacterID),
-    FOREIGN KEY (CartoonID) REFERENCES Cartoons(CartoonID)
+    FOREIGN KEY (PanelID) REFERENCES Panels(PanelID)
 );
 
 CREATE TABLE FamilyRelationships (
