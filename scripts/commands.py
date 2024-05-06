@@ -6,8 +6,10 @@ TODO:
     * Store temporary informations in a file
 """
 
+from typing import Any
+
 from scripts.db_query_handler import DBQueryHandler
-from scripts.utils.json import get_key_list
+from scripts.utils.config import get_key_list
 
 
 class Commands:
@@ -18,7 +20,7 @@ class Commands:
         handler (DBQueryHandler): Executes the queries.
     """
 
-    def __init__(self, handler: DBQueryHandler, config: dict):
+    def __init__(self, handler: DBQueryHandler, config: dict[str, Any]) -> None:
         """
         Constructs all the necessary attributes for the Commands object.
 
@@ -45,6 +47,6 @@ class Commands:
         """
         return callable(getattr(self, func)) and not func in self.exclude_list
 
-    def start_volume(self, volume_number: int):
+    def start_volume(self, volume_number: int) -> None:
         query = f"INSERT INTO  `Volumes` (`VolumeNumber`) VALUES ({volume_number})"
         self.handler.execute_query(query)
