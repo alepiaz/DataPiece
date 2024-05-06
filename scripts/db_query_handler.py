@@ -3,13 +3,13 @@ This module defines the DBQueryHandler class for handling database queries.
 """
 
 import sqlite3
-from scripts.utils.json import get_key_str
-from scripts.utils.os import (
-    file_exists_and_is_readable,
-    file_exists_and_dir_is_writable,
-    path_exists,
-)
 import os
+from scripts.utils.json import get_key_str
+from scripts.utils.files import (
+    can_read_existing_file,
+    can_write_to_dir_of_existing_file,
+    does_path_exist,
+)
 
 
 class DBQueryHandler:
@@ -44,7 +44,7 @@ class DBQueryHandler:
         """
         Deletes the existing database file if needed and if the file is readable.
         """
-        if self._need_to_delete() and file_exists_and_is_readable(self.db_path):
+        if self._need_to_delete() and can_read_existing_file(self.db_path):
             os.remove(self.db_path)
 
     def _need_to_delete(self) -> bool:
@@ -60,7 +60,7 @@ class DBQueryHandler:
         """
         Connects to the SQLite database.
         """
-        if file_exists_and_dir_is_writable(self.db_path) or not path_exists(
+        if can_write_to_dir_of_existing_file(self.db_path) or not does_path_exist(
             self.db_path
         ):
             self.conn = sqlite3.connect(self.db_path)
@@ -81,7 +81,8 @@ class DBQueryHandler:
         Creates the database schema if necessary.
 
         Args:
-            schema_file (str): The path to the schema file containing the database schema definition.
+            schema_file (str): The path to the schema file containing
+                the database schema definition.
         """
         self._initialize_database_from_schema(schema_file)
 
