@@ -29,6 +29,10 @@ Data Piece is a console-based application designed to streamline the process of 
 To start the console, run the following command:
 `python main.py --config config/config.json`
 
+## Database structure
+![ERM](src/erd.png?raw=True)
+
+
 ## Contributing
 
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
