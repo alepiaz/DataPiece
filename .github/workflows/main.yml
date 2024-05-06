@@ -31,16 +31,19 @@ jobs:
     - name: Lint with pylint
       run: |
         pip install pylint
+        shopt -s globstar
         pylint **/*.py
 
     - name: Lint with flake8
       run: |
         pip install flake8
+        shopt -s globstar
         flake8 **/*.py
 
     - name: Type check with mypy
       run: |
         pip install mypy
+        shopt -s globstar
         mypy **/*.py
 
     - name: Test with pytest
