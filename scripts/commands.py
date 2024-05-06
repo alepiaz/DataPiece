@@ -30,12 +30,20 @@ class Commands:
         self.config = config
         self.exclude_list = get_key_list(config, "exclude_list")
 
-    def get_command_names(self):
-        return [
-            func
-            for func in dir(self)
-            if callable(getattr(self, func)) and not func in self.exclude_list
-        ]
+    def get_command_names(self) -> list[str]:
+        """
+        Get a list of command names that are not exlcuded (i.e. __init__).
+
+        Returns:
+            list[str]: A list of commands
+        """
+        return [func for func in dir(self) if self._is_valid_command(func)]
+
+    def _is_valid_command(self, func: str) -> bool:
+        """
+        Check if the method with the given name is callable and not excluded.
+        """
+        return callable(getattr(self, func)) and not func in self.exclude_list
 
     def start_volume(self, volume_number: int):
         query = f"INSERT INTO Volumes (VolumeNumber) VALUES ({volume_number})"
