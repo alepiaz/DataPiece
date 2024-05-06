@@ -74,7 +74,7 @@ class DBQueryHandler:
         If the necessary tables do not exist in the database,
             it creates the database schema from the schema file.
         """
-        if not self._check_tables():
+        if not self._check_tables_existence():
             self._create_database(self.schema_file)
 
     def _create_database(self, schema_file: str) -> None:
@@ -87,14 +87,14 @@ class DBQueryHandler:
         """
         self._initialize_database_from_schema(schema_file)
 
-    def _check_tables(self) -> None:
+    def _check_tables_existence(self) -> int:
         """
         Checks if the necessary tables exist in the database.
 
         Returns:
             bool: True if the necessary tables exist, False otherwise.
         """
-        self.cursor.execute("SELECT name FROM sqlite_master WHERE type='table'")
+        self.cursor.execute("SELECT `name` FROM `sqlite_master` WHERE `type`='table'")
         tables = self.cursor.fetchall()
         return len(tables) > 0
 
