@@ -2,11 +2,13 @@
 This module provides a console interface for interacting with a database.
 """
 
-from pyreadline3 import Readline
-from scripts.db_query_handler import DBQueryHandler
-from scripts.commands import Commands
-from scripts.utils.json import get_key_dict
 from typing import Optional
+
+from pyreadline3 import Readline
+
+from scripts.commands import Commands
+from scripts.db_query_handler import DBQueryHandler
+from scripts.utils.config import get_key_dict
 
 
 class Console:
@@ -20,7 +22,7 @@ class Console:
         commands (list): A list of command names.
     """
 
-    def __init__(self, handler: DBQueryHandler, config: dict):
+    def __init__(self, handler: DBQueryHandler, config: dict) -> None:
         """
         The constructor for the Console class.
 
@@ -33,7 +35,7 @@ class Console:
         self.commands_instance = Commands(handler, get_key_dict(config, "commands"))
         self.commands = self.commands_instance.get_command_names()
 
-    def start(self):
+    def start(self) -> None:
         """
         Starts the console interface.
         """
