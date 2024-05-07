@@ -30,19 +30,25 @@ jobs:
 
     - name: Lint with pylint
       run: |
-        if [[ "${{ runner.os }}" == "Linux" ]]; then shopt -s globstar; fi
+        if [[ "${{ runner.os }}" == "Linux" ]]; then shopt -s globstar; 
+        elif [[ "${{ runner.os }}" == "macOS" ]]; then setopt globstar
+        fi
         pip install pylint
         pylint **/*.py
         
     - name: Lint with flake8
       run: |
-        if [[ "${{ runner.os }}" == "Linux" ]]; then shopt -s globstar; fi
+        if [[ "${{ runner.os }}" == "Linux" ]]; then shopt -s globstar; 
+        elif [[ "${{ runner.os }}" == "macOS" ]]; then setopt globstar
+        fi
         pip install flake8
         flake8 **/*.py
         
     - name: Type check with mypy
       run: |
-        if [[ "${{ runner.os }}" == "Linux" ]]; then shopt -s globstar; fi
+        if [[ "${{ runner.os }}" == "Linux" ]]; then shopt -s globstar; 
+        elif [[ "${{ runner.os }}" == "macOS" ]]; then setopt globstar
+        fi
         pip install mypy
         mypy **/*.py
 
