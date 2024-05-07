@@ -28,22 +28,21 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
 
-    - name: Enable globstar
-      run: shopt -s globstar
-      if: runner.os == 'Linux'
-      
     - name: Lint with pylint
       run: |
+        if [[ "${{ runner.os }}" == "Linux" ]]; then shopt -s globstar; fi
         pip install pylint
-        pylint scripts/*.py
-
+        pylint **/*.py
+        
     - name: Lint with flake8
       run: |
+        if [[ "${{ runner.os }}" == "Linux" ]]; then shopt -s globstar; fi
         pip install flake8
         flake8 **/*.py
-
+        
     - name: Type check with mypy
       run: |
+        if [[ "${{ runner.os }}" == "Linux" ]]; then shopt -s globstar; fi
         pip install mypy
         mypy **/*.py
 
