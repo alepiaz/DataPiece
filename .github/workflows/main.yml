@@ -3,8 +3,14 @@ name: Python application test with pytest and linting
 on:
   push:
     branches: [ main ]
+    paths:
+      - "scripts/**"
+      - "tests/**"
   pull_request:
     branches: [ main ]
+    paths:
+      - "scripts/**"
+      - "tests/**"
 
 jobs:
   build:
@@ -30,27 +36,18 @@ jobs:
 
     - name: Lint with pylint
       run: |
-        if [[ "${{ runner.os }}" == "Linux" ]]; then shopt -s globstar; 
-        elif [[ "${{ runner.os }}" == "macOS" ]]; then setopt globstar;
-        fi
         pip install pylint
-        pylint **/*.py
+        pylint scripts tests
         
     - name: Lint with flake8
       run: |
-        if [[ "${{ runner.os }}" == "Linux" ]]; then shopt -s globstar; 
-        elif [[ "${{ runner.os }}" == "macOS" ]]; then setopt globstar;
-        fi
         pip install flake8
-        flake8 **/*.py
+        flake8 scripts tests
         
     - name: Type check with mypy
       run: |
-        if [[ "${{ runner.os }}" == "Linux" ]]; then shopt -s globstar; 
-        elif [[ "${{ runner.os }}" == "macOS" ]]; then setopt globstar;
-        fi
         pip install mypy
-        mypy **/*.py
+        mypy scripts tests
 
     - name: Test with pytest
       run: |
