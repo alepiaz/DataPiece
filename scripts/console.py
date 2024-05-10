@@ -4,7 +4,7 @@ This module provides a console interface for interacting with a database.
 
 from typing import Optional
 
-from pyreadline3 import Readline
+from pyreadline3 import Readline  # type: ignore
 
 from scripts.commands import Commands
 from scripts.db_query_handler import DBQueryHandler
@@ -80,4 +80,4 @@ class Console:
         options = [i for i in self.commands if i.startswith(text)]
         if state < len(options):
             return options[state]
-        return
+        return None

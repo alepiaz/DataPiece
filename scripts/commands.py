@@ -45,8 +45,14 @@ class Commands:
         """
         Check if the method with the given name is callable and not excluded.
         """
-        return callable(getattr(self, func)) and not func in self.exclude_list
+        return callable(getattr(self, func)) and func not in self.exclude_list
 
     def start_volume(self, volume_number: int) -> None:
+        """
+        Inserts a new volume with the given volume number into the 'Volumes' table.
+
+        Args:
+            volume_number (int): The number of the volume to be started.
+        """
         query = f"INSERT INTO  `Volumes` (`VolumeNumber`) VALUES ({volume_number})"
         self.handler.execute_query(query)

@@ -17,7 +17,7 @@ def load_config(config_path: str) -> dict[str, Any]:
         dict: Loaded config as a dictionary or an empty dictionary if file not found.
     """
     try:
-        with open(config_path, "r") as f:
+        with open(config_path, "r", encoding="utf-8") as f:
             config = json.load(f)
     except FileNotFoundError:
         print(f"Config file {config_path} does not exist.")

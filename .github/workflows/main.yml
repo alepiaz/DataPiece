@@ -37,17 +37,23 @@ jobs:
     - name: Lint with pylint
       run: |
         pip install pylint
-        pylint setup.py tests
-        
+        pylint setup.py scripts tests
+
+    - name: Set up Flake8 configuration
+      run: |
+        echo "[flake8]" > .flake8
+        echo "max-line-length = 100" >> .flake8
+      
     - name: Lint with flake8
       run: |
         pip install flake8
-        flake8 setup.py tests
+        flake8 setup.py scripts tests
+      
         
     - name: Type check with mypy
       run: |
         pip install mypy
-        mypy setup.py tests
+        mypy setup.py scripts tests
 
     - name: Test with pytest
       run: |

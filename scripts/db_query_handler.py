@@ -13,7 +13,7 @@ from scripts.utils.files import (
 from scripts.utils.config import get_key_str
 
 
-class DBQueryHandler:
+class DBQueryHandler:  # pylint: disable=too-few-public-methods
     """
     A handler for database queries.
 
@@ -119,7 +119,7 @@ class DBQueryHandler:
             list[str]: List of SQL commands.
         """
         try:
-            with open(schema_file, "r") as f:
+            with open(schema_file, "r", encoding="utf-8") as f:
                 return f.read().split(";")
         except FileNotFoundError:
             print(f"Schema file {schema_file} does not exist.")
@@ -127,27 +127,16 @@ class DBQueryHandler:
 
     def _execute_sql_commands_list(self, sql_commands: list[str]) -> None:
         """
-        Executes the given list of SQL commands.
+        Executes the given list of SQL commands and commits the changes.
 
         Parameters:
             sql_commands (list): List of SQL commands.
         """
         for command in sql_commands:
-            self._execute_sql_command(command)
+            self.execute_query(command, commit=False)
+        self.conn.commit()
 
-    def _execute_sql_command(self, command: str) -> None:
-        """
-        Executes the given SQL command.
-
-        Parameters:
-            command (str): SQL command.
-        """
-        try:
-            self.cursor.execute(command)
-        except sqlite3.OperationalError as e:
-            print(f"Command skipped: {e}")
-
-    def execute_query(self, query: str) -> None:
+    def execute_query(self, query: str, commit=True) -> None:
         """
         Executes the given SQL query and commits the changes.
 
@@ -155,4 +144,5 @@ class DBQueryHandler:
             query (str): SQL query.
         """
         self.cursor.execute(query)
-        self.conn.commit()
+        if commit:
+            self.conn.commit()
