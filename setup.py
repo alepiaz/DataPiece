@@ -7,10 +7,11 @@ The console takes user input and uses the database query handler to interact wit
 
 import argparse
 from argparse import Namespace
+from typing import Any, Dict
+
 from scripts.console import Console
 from scripts.db_query_handler import DBQueryHandler
 from scripts.utils.config import get_key_dict, load_config
-from typing import Dict, Any
 
 
 def parse_arguments() -> Namespace:
