@@ -37,7 +37,7 @@ jobs:
     - name: Set PYTHONPATH to project root
       run: |
         if [ "$RUNNER_OS" == "Windows" ]; then
-          echo "##[set-env name=PYTHONPATH]$(pwd)/scripts"
+          echo "env:PYTHONPATH]+=$(pwd)/scripts"
         else
           echo "export PYTHONPATH=$(pwd)/scripts" >> $GITHUB_ENV  
         fi
