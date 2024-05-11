@@ -33,7 +33,7 @@ jobs:
       run: |
         echo "Current Working Directory is $(pwd)"
         echo "Adding PWD to Python path"
-        echo "$env:PYTHONPATH+=";$(pwd)"" | Out-File -Append -FilePath $env:GITHUB_ENV -Encoding utf8
+        echo "env:PYTHONPATH=$env:PYTHONPATH;$(pwd)" | Out-File -Append -FilePath $env:GITHUB_ENV -Encoding utf8
 
     - name: Install dependencies
       run: |
