@@ -6,9 +6,9 @@ from typing import Optional
 
 from pyreadline3 import Readline  # type: ignore
 
-from commands import Commands
-from db_query_handler import DBQueryHandler
-from utils.config import get_key_dict
+from scripts.commands import Commands
+from scripts.db_query_handler import DBQueryHandler
+from scripts.utils.config import get_key_dict
 
 
 class Console:

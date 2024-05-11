@@ -8,8 +8,8 @@ TODO:
 
 from typing import Any
 
-from db_query_handler import DBQueryHandler
-from utils.config import get_key_list
+from scripts.db_query_handler import DBQueryHandler
+from scripts.utils.config import get_key_list
 
 
 class Commands:

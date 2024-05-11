@@ -34,14 +34,6 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
 
-    - name: Set PYTHONPATH to project root
-      run: |
-        if [ "$RUNNER_OS" == "Windows" ]; then
-          echo "env:PYTHONPATH]+=$(pwd)/scripts"
-        else
-          echo "export PYTHONPATH=$(pwd)/scripts" >> $GITHUB_ENV  
-        fi
-
     - name: Lint with pylint
       run: |
         pip install pylint
