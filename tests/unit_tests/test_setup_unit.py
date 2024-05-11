@@ -6,12 +6,18 @@ import unittest
 from unittest.mock import MagicMock, patch
 
 from setup import create_console, create_handler, parse_arguments
+import sys
 
 
 class TestSetupUnit(unittest.TestCase):
     """
     This class contains unit tests for the setup
     """
+
+    def setUp(self) -> None:
+        """debug"""
+        for path in sys.path:
+            print(path)
 
     @patch("argparse.ArgumentParser.parse_args")
     def test_parse_arguments(self, mock_parse_args: MagicMock):
