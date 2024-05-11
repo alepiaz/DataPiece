@@ -2,11 +2,11 @@
 This module contains unit tests for the setup
 """
 
+import sys
 import unittest
 from unittest.mock import MagicMock, patch
 
 from setup import create_console, create_handler, parse_arguments
-import sys
 
 
 class TestSetupUnit(unittest.TestCase):

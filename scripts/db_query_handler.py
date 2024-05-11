@@ -6,11 +6,8 @@ import os
 import sqlite3
 
 from scripts.utils.config import get_key_str
-from scripts.utils.files import (
-    is_path_existent,
-    is_readable_existing_file,
-    is_writeable_file_directory,
-)
+from scripts.utils.files import (is_path_existent, is_readable_existing_file,
+                                 is_writeable_file_directory)
 
 
 class DBQueryHandler:  # pylint: disable=too-few-public-methods
