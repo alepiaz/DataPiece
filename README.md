@@ -32,7 +32,7 @@ python main.py --config config/config.json
 ```
 
 ## Database structure
-![ERM](src/erd.png?raw=True)
+![ERM](img/erd.png?raw=True)
 
 
 ## Contributing
