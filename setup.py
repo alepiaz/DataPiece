@@ -9,9 +9,9 @@ import argparse
 from argparse import Namespace
 from typing import Any, Dict
 
-from scripts.console import Console
-from scripts.db_query_handler import DBQueryHandler
-from scripts.utils.config import get_key_dict, load_config
+from console import Console
+from db_query_handler import DBQueryHandler
+from utils.config import get_key_dict, load_config
 
 
 def parse_arguments() -> Namespace:
