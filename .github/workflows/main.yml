@@ -34,6 +34,10 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
 
+    - name: Set PYTHONPATH to project root
+      run: |
+        echo "export PYTHONPATH=$(pwd)" >> $GITHUB_ENV
+
     - name: Lint with pylint
       run: |
         pip install pylint
