@@ -30,7 +30,7 @@ def main(config_path: str) -> None:
     try:
         console.start()
     except RuntimeError as error:
-        logging.error("An error occurred while starting the console: %s" % error)
+        logging.error("An error occurred while starting the console: %s", error)
 
 
 if __name__ == "__main__":
