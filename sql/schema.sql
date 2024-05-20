@@ -43,7 +43,7 @@ CREATE TABLE Panels (
 CREATE TABLE Characters (
     CharacterID INT PRIMARY KEY,
     Name VARCHAR(255),
-    Status ENUM('Alive', 'Dead', 'Unknown') DEFAULT 'Unknown'
+    Status TEXT CHECK(Status IN ('Alive', 'Dead', 'Unknown')) DEFAULT 'Unknown'
 );
 
 CREATE TABLE Affiliations (
@@ -70,7 +70,7 @@ CREATE TABLE CharacterAffiliations (
 CREATE TABLE DevilFruits (
     FruitID INT PRIMARY KEY,
     FruitName VARCHAR(255),
-    Type ENUM('Paramecia', 'Zoan', 'Logia')
+    Type TEXT CHECK(Type IN ('Paramecia', 'Zoan', 'Logia'))
 );
 
 CREATE TABLE CharacterDevilFruits (
@@ -108,7 +108,7 @@ CREATE TABLE FamilyRelationships (
     RelationshipID INT PRIMARY KEY,
     Character1ID INT,
     Character2ID INT,
-    RelationshipType ENUM('Parent', 'Child', 'Sibling'),
+    RelationshipType TEXT CHECK(RelationshipType IN ('Parent', 'Child', 'Sibling')),
     FOREIGN KEY (Character1ID) REFERENCES Characters(CharacterID),
     FOREIGN KEY (Character2ID) REFERENCES Characters(CharacterID)
 );
