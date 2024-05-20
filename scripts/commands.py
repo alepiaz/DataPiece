@@ -54,5 +54,6 @@ class Commands:
         Args:
             volume_number (int): The number of the volume to be started.
         """
-        query = f"INSERT INTO  `Volumes` (`VolumeNumber`) VALUES ({volume_number})"
+        query = f"INSERT INTO `Volumes` (`VolumeNumber`) VALUES ({volume_number})"
         self.handler.execute_query(query)
+        self.handler.conn.commit()
