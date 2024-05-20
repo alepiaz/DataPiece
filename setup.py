@@ -7,8 +7,9 @@ The console takes user input and uses the database query handler to interact wit
 
 import argparse
 import logging
-from scripts.utils.setup import create_console, create_handler
+
 from scripts.utils.config import load_config
+from scripts.utils.setup import create_console, create_handler
 
 
 def main(config_path: str) -> None:
