@@ -2,6 +2,7 @@
 This module provides a console interface for interacting with a database.
 """
 
+import logging
 from typing import Optional
 
 from pyreadline3 import Readline  # type: ignore
@@ -58,8 +59,10 @@ class Console:
                     print(f"Unknown command: {command_name}")
             except KeyboardInterrupt:
                 # Handle Ctrl+C
+                logging.info("Exit")
                 continue
             except EOFError:
+                logging.info("Exit")
                 # Handle Ctrl+D / EOF
                 break
 
