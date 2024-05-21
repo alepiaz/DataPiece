@@ -5,8 +5,8 @@ Unit tests for the Commands class.
 import unittest
 from unittest.mock import Mock, create_autospec
 
-from scripts.commands import Commands
-from scripts.db_query_handler import DBQueryHandler
+from datapiece.scripts.commands import Commands
+from datapiece.scripts.db_query_handler import DBQueryHandler
 
 
 class TestCommands(unittest.TestCase):
