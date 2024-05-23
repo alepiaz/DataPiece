@@ -3,11 +3,11 @@ Unit tests for the Console class.
 """
 
 import unittest
+from typing import List, Tuple, Union
 from unittest.mock import Mock, patch
 
 from datapiece.scripts.console import Console
 from datapiece.scripts.db_query_handler import DBQueryHandler
-from typing import Union, Tuple, List
 
 
 class TestConsole(unittest.TestCase):

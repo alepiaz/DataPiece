@@ -7,10 +7,8 @@ import os
 import sqlite3
 
 from datapiece.scripts.utils.config import get_key_str
-from datapiece.scripts.utils.files import (
-    is_readable_existing_file,
-    is_writeable_file_directory,
-)
+from datapiece.scripts.utils.files import (is_readable_existing_file,
+                                           is_writeable_file_directory)
 
 
 class DBQueryHandler:
