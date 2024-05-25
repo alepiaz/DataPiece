@@ -88,7 +88,7 @@ class TestConsole(unittest.TestCase):
 
     def test_completer(self) -> None:
         """
-        Test the completer method of the Console class.
+        Test the completer method.
         """
         self.console.commands = ["command1", "command2"]
         self.assertEqual(self.console.completer("comm", 0), "command1")
