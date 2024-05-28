@@ -1,10 +1,9 @@
 CREATE TABLE Volumes (
-    VolumeNumber INT PRIMARY KEY,
-    ReleaseDate DATE
+    VolumeNumber INT PRIMARY KEY
 );
 
 CREATE TABLE Arcs (
-    ArcID INT PRIMARY KEY,
+    ArcID INTEGER PRIMARY KEY AUTOINCREMENT,
     ArcName VARCHAR(255)
 );
 
@@ -43,7 +42,10 @@ CREATE TABLE Panels (
 CREATE TABLE Characters (
     CharacterID INT PRIMARY KEY,
     Name VARCHAR(255),
-    Status TEXT CHECK(Status IN ('Alive', 'Dead', 'Unknown')) DEFAULT 'Unknown'
+    Gender CHECK(Gender IN ('Male', 'Female', 'Non-Binary', 'Unknown')) DEFAULT 'Unknown',
+    Race VARCHAR(255) DEFAULT 'Unknown',
+    Height INT DEFAULT 'Unknown',
+    HairColor VARCHAR(255) DEFAULT 'Unknown'
 );
 
 CREATE TABLE Affiliations (
@@ -55,7 +57,6 @@ CREATE TABLE CharacterAppearances (
     AppearanceID INT PRIMARY KEY,
     CharacterID INT,
     PanelID INT,
-    Bounty BIGINT,
     FOREIGN KEY (CharacterID) REFERENCES Characters(CharacterID),
     FOREIGN KEY (PanelID) REFERENCES Panels(PanelID)
 );
@@ -73,35 +74,24 @@ CREATE TABLE DevilFruits (
     Type TEXT CHECK(Type IN ('Paramecia', 'Zoan', 'Logia'))
 );
 
-CREATE TABLE CharacterDevilFruits (
-    AppearanceID INT,
-    FruitID INT,
-    FOREIGN KEY (AppearanceID) REFERENCES CharacterAppearances(AppearanceID),
-    FOREIGN KEY (FruitID) REFERENCES DevilFruits(FruitID)
-);
-
 CREATE TABLE Abilities (
     AbilityID INT PRIMARY KEY,
     AbilityName VARCHAR(255)
 );
 
-CREATE TABLE CharacterAbilities (
-    AppearanceID INT,
-    AbilityID INT,
-    FOREIGN KEY (AppearanceID) REFERENCES CharacterAppearances(AppearanceID),
-    FOREIGN KEY (AbilityID) REFERENCES Abilities(AbilityID)
-);
-
 CREATE TABLE CharacterInteractions (
     InteractionID INT PRIMARY KEY,
-    Character1ID INT,
-    Character2ID INT,
     PanelID INT,
-    IsFighting BOOLEAN DEFAULT FALSE,
-    IsTalking BOOLEAN DEFAULT FALSE,
-    FOREIGN KEY (Character1ID) REFERENCES Characters(CharacterID),
-    FOREIGN KEY (Character2ID) REFERENCES Characters(CharacterID),
+    InteractionType TEXT,
+    Outcome TEXT DEFAULT 'Ongoing',
     FOREIGN KEY (PanelID) REFERENCES Panels(PanelID)
+);
+
+CREATE TABLE InteractionCharacters (
+    InteractionID INT,
+    CharacterID INT,
+    FOREIGN KEY (InteractionID) REFERENCES CharacterInteractions(InteractionID),
+    FOREIGN KEY (CharacterID) REFERENCES Characters(CharacterID)
 );
 
 CREATE TABLE FamilyRelationships (
@@ -126,4 +116,20 @@ CREATE TABLE CharacterRelationship (
     RelationshipID INT,
     FOREIGN KEY (AppearanceID) REFERENCES CharacterAppearances(AppearanceID),
     FOREIGN KEY (RelationshipID) REFERENCES RomanticRelationships(RelationshipID)
+);
+
+CREATE TABLE CharacterEvents (
+    EventID INT PRIMARY KEY,
+    AppearanceID INT,
+    PanelID INT,
+    FruitID INT,
+    AffiliationID INT,
+    AbilityID INT,
+    Bounty BIGINT,
+    Status TEXT CHECK(Status IN ('Alive', 'Dead', 'Unknown')) DEFAULT 'Unknown',
+    FOREIGN KEY (AppearanceID) REFERENCES CharacterAppearances(AppearanceID),
+    FOREIGN KEY (PanelID) REFERENCES Panels(PanelID),
+    FOREIGN KEY (FruitID) REFERENCES DevilFruits(FruitID),
+    FOREIGN KEY (AffiliationID) REFERENCES Affiliations(AffiliationID),
+    FOREIGN KEY (AbilityID) REFERENCES Abilities(AbilityID)
 );
