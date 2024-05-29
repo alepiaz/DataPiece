@@ -4,13 +4,14 @@ CREATE TABLE Volumes (
 
 CREATE TABLE Arcs (
     ArcID INTEGER PRIMARY KEY AUTOINCREMENT,
-    ArcName VARCHAR(255)
+    ArcName VARCHAR(255) NOT NULL
 );
 
 CREATE TABLE Chapters (
     ChapterID INT PRIMARY KEY,
     VolumeNumber INT,
     ArcID INT,
+    ChapterNumber INT NOT NULL,
     ChapterName VARCHAR(255),
     FOREIGN KEY (VolumeNumber) REFERENCES Volumes(VolumeNumber),
     FOREIGN KEY (ArcID) REFERENCES Arcs(ArcID)
@@ -19,7 +20,7 @@ CREATE TABLE Chapters (
 CREATE TABLE Pages (
     PageID INT PRIMARY KEY,
     ChapterID INT,
-    PageNumber INT,
+    PageNumber INT NOT NULL,
     IsColorSpread BOOLEAN DEFAULT FALSE,
     IsDoubleSpread BOOLEAN DEFAULT FALSE,
     IsCoverPage BOOLEAN DEFAULT FALSE,
@@ -34,6 +35,7 @@ CREATE TABLE Pages (
 CREATE TABLE Panels (
     PanelID INT PRIMARY KEY,
     PageID INT,
+    PanelNumber INT NOT NULL,
     IsFlashback BOOLEAN DEFAULT FALSE,
     Location VARCHAR(255) DEFAULT 'Unknown',
     FOREIGN KEY (PageID) REFERENCES Pages(PageID)
@@ -41,7 +43,7 @@ CREATE TABLE Panels (
 
 CREATE TABLE Characters (
     CharacterID INT PRIMARY KEY,
-    Name VARCHAR(255),
+    Name VARCHAR(255) NOT NULL,
     Gender CHECK(Gender IN ('Male', 'Female', 'Non-Binary', 'Unknown')) DEFAULT 'Unknown',
     Race VARCHAR(255) DEFAULT 'Unknown',
     Height INT DEFAULT 'Unknown',
@@ -125,7 +127,7 @@ CREATE TABLE CharacterEvents (
     FruitID INT,
     AffiliationID INT,
     AbilityID INT,
-    Bounty BIGINT,
+    Bounty BIGINT DEFAULT 0,
     Status TEXT CHECK(Status IN ('Alive', 'Dead', 'Unknown')) DEFAULT 'Unknown',
     FOREIGN KEY (AppearanceID) REFERENCES CharacterAppearances(AppearanceID),
     FOREIGN KEY (PanelID) REFERENCES Panels(PanelID),
